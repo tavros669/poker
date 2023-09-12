@@ -10,9 +10,7 @@ with open("0054_poker.txt", "r", newline='\n') as f:
 p1 = [x.split(sep=" ") for x in p1]
 p2 = [x.split(sep=" ") for x in p2]
 
-
-
-
+conversion = {'T': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14}
 
 
 def full_house(hand):
@@ -26,3 +24,35 @@ def full_house(hand):
     if x + y == 5:
         return True
 
+
+def pair(hand):
+    convert = [int(card[0]) if card[0] not in conversion.keys() else conversion[card[0]] for card in hand]
+    
+    counts = {}
+        
+    for x in convert:
+        counts.update({x: convert.count(x)})
+
+    if len(counts) == 4:
+        return True
+    
+    else:
+        return False
+
+def two_pair(hand):
+    convert = [int(card[0]) if card[0] not in conversion.keys() else conversion[card[0]] for card in hand]
+    
+    counts = {}
+        
+    for x in convert:
+        counts.update({x: convert.count(x)})
+        
+    counts = dict(sorted(counts.items(), key=lambda x: x[1], reverse=True))
+
+    if len(counts) == 3 and counts[list(counts.keys())[0]] == 2:     
+        return True
+    
+    else:
+        return False
+    
+print(two_pair(['7D','7S','5D','5S','AC']))
