@@ -1,0 +1,56 @@
+p1 = []
+p2 = []
+
+with open("poker.txt", "r", newline='\n') as f:
+    for x in f:
+        p1.append(x[0:14])
+        p2.append(x[15:29])
+
+p1 = [x.split(sep=" ") for x in p1]
+p2 = [x.split(sep=" ") for x in p2]
+
+conversion = {'T': 10, 'J': 11, 'Q': 12, 'K': 13, 'A': 14}
+
+
+def pair(hand):
+    convert = [int(card[0]) if card[0] not in conversion.keys() else conversion[card[0]] for card in hand]
+    
+    counts = {}
+        
+    for x in convert:
+        counts.update({x: convert.count(x)})
+
+    if len(counts) == 4:
+        return True
+    
+    else:
+        return False
+
+def two_pair(hand):
+    convert = [int(card[0]) if card[0] not in conversion.keys() else conversion[card[0]] for card in hand]
+    
+    counts = {}
+        
+    for x in convert:
+        counts.update({x: convert.count(x)})
+        
+    counts = dict(sorted(counts.items(), key=lambda x: x[1], reverse=True))
+
+    if len(counts) == 3 and counts[list(counts.keys())[0]] == 2:     
+        return True
+    
+    else:
+        return False
+
+def full_house(hand):
+    """3 of a kind, two of a kind returns "True" if the hand is a full house"""
+    card_value = []
+    for x in hand:
+        card_value.append(x[0])
+    card_value.sort()
+    y = card_value.count(card_value[0])
+    x = card_value.count(card_value[-1])
+    if x + y == 5:
+        return True
+    
+print(pair(['7D','7S','5D','5S','AC']))
