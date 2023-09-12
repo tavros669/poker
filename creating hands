@@ -9,3 +9,20 @@ with open("0054_poker.txt", "r", newline='\n') as f:
 
 p1 = [x.split(sep=" ") for x in p1]
 p2 = [x.split(sep=" ") for x in p2]
+
+
+
+
+
+
+def full_house(hand):
+    """3 of a kind, two of a kind returns "True" if the hand is a full house"""
+    card_value = []
+    for x in hand:
+        card_value.append(x[0])
+    card_value.sort()
+    y = card_value.count(card_value[0])
+    x = card_value.count(card_value[-1])
+    if x + y == 5:
+        return True
+
